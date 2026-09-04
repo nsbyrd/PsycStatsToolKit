@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap" rel="stylesheet">
+<style>
+html{background:#ffffff}
+body{margin:0;background:#ffffff;color:#1e1d1a;font:400 15.5px/1.65 "Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+*,*::before,*::after{box-sizing:border-box}
+a{color:oklch(0.45 0.07 250);text-decoration:none;border-bottom:1px solid oklch(0.86 0.035 250)}
+a:hover{color:oklch(0.34 0.08 250);border-bottom-color:currentColor}
+h1{font:400 clamp(26px,3vw,32px)/1.2 "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:-0.01em;margin:0 0 26px}
+h2{font:600 12.5px/1.3 "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:oklch(0.48 0.07 250);margin:42px 0 12px}
+h3{font:600 17px/1.3 "Helvetica Neue",Helvetica,Arial,sans-serif;margin:24px 0 8px;color:#1e1d1a}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 16px;padding-left:22px}
+li{margin-bottom:5px}
+li::marker{color:oklch(0.62 0.05 250)}
+strong{font-weight:600}
+code{font:13.5px/1.5 ui-monospace,Menlo,monospace;background:rgba(30,29,26,.06);padding:1px 5px}
+table{border-collapse:collapse;width:100%;margin:6px 0 18px;font-size:15.5px}
+th{text-align:left;font:600 11.5px/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#57534c;padding:0 14px 7px 0;border-bottom:1px solid rgba(30,29,26,.35)}
+td{padding:8px 14px 8px 0;border-bottom:1px solid rgba(30,29,26,.1);color:#3a3833}
+hr{border:none;border-top:1px solid rgba(30,29,26,.13);margin:38px 0 30px}
+::selection{background:oklch(0.9 0.05 250)}
+</style>
+</helmet>
+
+<div style="display:grid;grid-template-columns:266px minmax(0,1fr);align-items:start;min-height:100vh">
+
+  <aside style="position:sticky;top:0;padding:34px 26px 26px 34px;border-right:1px solid rgba(30,29,26,.12);display:flex;flex-direction:column;gap:26px">
+    <div onClick="{{ nav.home }}" style="cursor:pointer">
+      <div style="font:600 18px/1.2 &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:-0.005em">PsycStats ToolKit</div>
+      <div style="font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: #8a867e; margin-top: 6px; font-family: Arial">PSYCHOLOGY STATISTICS HELP | JAMOVI AND R</div>
+    </div>
+    <nav style="display:flex;flex-direction:column;gap:1px;margin-left:-10px">
+      <sc-for list="{{ items }}" as="item" hint-placeholder-count="9">
+        <div onClick="{{ item.onClick }}" style="{{ item.style }}" style-hover="background:rgba(30,29,26,.05)">
+          <span style="{{ item.numStyle }}">{{ item.num }}</span><span>{{ item.label }}</span>
+        </div>
+      </sc-for>
+    </nav>
+    <div style="margin-top:auto;font-size:11.5px;line-height:1.6;color:#a09c94">Last update: 9/05/2026</div>
+  </aside>
+
+  <main style="padding:56px 40px 0;display:flex;flex-direction:column;min-height:100vh">
+   <div style="max-width:720px;width:100%;flex:1">
+
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <h1>Help for Psychology Statistics</h1>
+      <p style="font-size: 17px; color: #3a3833; margin: 0 0 18px; max-width: 600px; width: 805px; height: 90px">This site is intended as a resource and guide for undergraduate psychology students to better understand statistical methods &amp; using Jamovi or R.</p>
+      <p style="color:#6b6862;font-size:14.5px">Click on one of the following topics to get help!</p>
+      <div style="{{ homeListStyle }}">
+        <sc-for list="{{ homeItems }}" as="item" hint-placeholder-count="9">
+          <div onClick="{{ item.onClick }}" style="display:flex;align-items:baseline;gap:14px;padding:11px 0;border-bottom:1px solid rgba(30,29,26,.1);cursor:pointer;min-width:230px" style-hover="background:rgba(30,29,26,.035)">
+            <span style="font:500 11px ui-monospace,Menlo,monospace;color:#a8a49b">{{ item.dot }}</span>
+            <span style="font:400 16px/1.3 &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;color:oklch(0.45 0.07 250)">{{ item.label }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <hr>
+
+      <h2>Software</h2>
+      <h3>Jamovi</h3>
+      <p>Jamovi is a free, point-and-click statistics program which is a great place to start if you're not ready to write code yet. Download it at <a href="https://www.jamovi.org/download.html" target="_blank">jamovi.org/download</a>.</p>
+      <h3>R</h3>
+      <p>R is a free programming language for statistics, which is a more flexible way to do analyses. Download R at <a href="https://cran.r-project.org/" target="_blank">cran.r-project.org</a>, and I'd also recommend <a href="https://posit.co/download/rstudio-desktop/" target="_blank">RStudio</a> as the interface to write and run it in.</p>
+
+      <hr>
+
+      <h2>About the Author</h2>
+      <p>Natalie Byrd was a B.S. Psychology &amp; Honors student at St. John Fisher University that graduated in May 2025. She is passionate about research and statistics, and while preparing for her independent research she realized that a "one-stop-shop" was needed for reviewing core information about statistics methods &amp; Jamovi statistical software. She is now a dual-title Psychology and Social Data Analytics PhD student at Penn State University.</p>
+      <p>To connect with Natalie, visit <a href="http://www.linkedin.com/in/nsbyrd" target="_blank">www.linkedin.com/in/nsbyrd</a> or <a href="https://nsbyrd.github.io/nsbyrd/" target="_blank">https://nsbyrd.github.io/nsbyrd/</a></p>
+      <p>For any questions, comments, or concerns, please email <a href="mailto:nsb5522@psu.edu">nsb5522@psu.edu</a></p>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isDescriptives }}">
+    <div>
+      <h1>Descriptive Statistics</h1>
+      <h2>Purpose:</h2>
+      <p>Descriptive statistics summarize and describe the basic features of a dataset. Unlike inferential statistics, they do not test hypotheses, but instead they describe what the data look like.</p>
+      <h2>Key Terms:</h2>
+      <h3>Central Tendency</h3>
+      <ul>
+        <li><strong>Mean:</strong> The arithmetic average. Sensitive to outliers.</li>
+        <li><strong>Median:</strong> The middle value when data are ordered. More robust to outliers than the mean.</li>
+        <li><strong>Mode:</strong> The most frequently occurring value. A dataset can have more than one mode.</li>
+      </ul>
+      <h3>Variability</h3>
+      <ul>
+        <li><strong>Range:</strong> The difference between the highest and lowest values. A small range indicates data are tightly clustered; a large range indicates greater spread.</li>
+        <li><strong>Standard Deviation (SD):</strong> The average distance of each score from the mean. A small SD means scores cluster near the mean; a large SD means scores are spread out.</li>
+        <li><strong>Variance:</strong> The square of the standard deviation. Less intuitive to interpret on its own, but used in many statistical formulas.</li>
+      </ul>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <ol>
+            <li>Click "Exploration"</li>
+            <li>Click "Descriptives"</li>
+            <li>Move the variable(s) of interest into the "Variables" box</li>
+            <li>Under "Statistics," check: Mean, Median, Mode, Std. deviation, Variance, Range, Minimum, Maximum</li>
+            <li>Under "Plots," check "Histogram" to visualize the distribution</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">describe(df)   # psych package: mean, sd, median, min, max, range, skew, kurtosis
+summary(df)    # base R: min, Q1, median, mean, Q3, max
+
+mean(df$variable, na.rm = TRUE)
+median(df$variable, na.rm = TRUE)
+sd(df$variable, na.rm = TRUE)
+range(df$variable, na.rm = TRUE)
+var(df$variable, na.rm = TRUE)</code></pre>
+        </div>
+      </div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>Mean:</strong> The average score. Sensitive to extreme values (outliers).</p>
+      <p><strong>Median:</strong> The middle value. Use alongside or instead of the mean when data are skewed.</p>
+      <p><strong>SD:</strong> How spread out scores are around the mean. Smaller SD = scores clustered near mean. Larger SD = scores spread out.</p>
+      <p><strong>Range:</strong> The span of the data. Smaller range = data are more tightly clustered. Larger range = data are more widely spread.</p>
+      <p><strong>Variance:</strong> SD squared. Harder to interpret directly; used in other statistical calculations.</p>
+      <h2>APA Format:</h2>
+      <p>Descriptive statistics are typically reported in text as <em>M</em> and <em>SD</em> in parentheses after the group name.</p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">Participants reported moderate levels of perceived stress (<em>M</em> = 18.42, <em>SD</em> = 4.67).</div></div>
+      <p style="margin-top:12px">For tables, see: <a href="https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables" target="_blank">APA sample tables</a></p>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isTtest }}">
+    <div>
+      <h1>T-Tests</h1>
+      <h2>Purpose:</h2>
+      <p>Compare the means between two groups. There are three kinds of t-tests: an independent samples t-test (for between-group manipulation), a paired samples t-test (for within-group manipulation), and one-sample t-tests (for one sample being compared to the population).</p>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Note: Between-group manipulation (between-subjects study design) means that each group received a different IV treatment condition (level). Within-group manipulation (within-subjects study design) means that every participant experiences every IV treatment condition (level).</div>
+      <h2>Context Used:</h2>
+      <ul>
+        <li>There must be only ONE CATEGORICAL IV, with only TWO LEVELS.</li>
+        <li>Additionally, there must be only ONE QUANTITATIVE DV.</li>
+      </ul>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Note: Categorical variables are variables where the data represents groups with no real numerical value (e.g., gender, car brand, hair color, education level). Quantitative variables are variables where the data represents amounts with a real numerical value (e.g., height, weight, age, time, speed, distance).</div>
+      <div style="background:oklch(0.97 0.028 85);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.4 0.055 65)"><strong>Do NOT use a t-test if:</strong> Your IV has more than two levels → use ANOVA | Your DV is categorical → use chi-square | You have multiple DVs → use MANOVA | You have covariates you need to control for → use ANCOVA or regression</div>
+      <h2>Assumptions:</h2>
+      <p>Before running a t-test, three assumptions should be met:</p>
+      <ul>
+        <li><strong>Normality:</strong> The DV should be approximately normally distributed within each group. In Jamovi, check this under "Assumption Checks" → "Normality test (Shapiro-Wilk)." If <em>p</em> &lt; .05, normality is violated — use a non-parametric test instead.</li>
+        <li><strong>Independence:</strong> Observations must be independent of one another (each participant contributes one score).</li>
+        <li><strong>Homogeneity of variances (independent samples only):</strong> The two groups should have similar variances. Jamovi tests this with Levene's test. If <em>p</em> &lt; .05, select "Welch's" correction under "Variances."</li>
+      </ul>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)"><strong>When to use a non-parametric alternative:</strong> If the normality assumption is violated, use: Independent samples → Mann-Whitney U | Paired samples → Wilcoxon Signed-Rank Test. Both are available in Jamovi under the T-Tests menu.</div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <h3 style="margin-top:0">Independent Samples T-Test:</h3>
+          <ol>
+            <li>Click "T-Tests"</li>
+            <li>Click "Independent Samples T-Test"</li>
+            <li>Enter the quantitative dependent variable into the "Dependent Variables" box</li>
+            <li>Enter the categorical independent variable in the "Grouping Variable" box</li>
+            <li>Check "Effect size" and "Confidence interval" under "Additional Statistics"</li>
+          </ol>
+          <h3>Paired Samples T-Test:</h3>
+          <ol>
+            <li>Click "T-Tests"</li>
+            <li>Click "Paired Samples T-Test"</li>
+            <li>Enter the two IV level score columns into the "Paired Variables" box</li>
+            <li>Check "Effect size" and "Confidence interval" under "Additional Statistics"</li>
+          </ol>
+          <h3>One-Sample T-Test:</h3>
+          <ol>
+            <li>Click "T-Tests"</li>
+            <li>Click "One Sample T-Test"</li>
+            <li>Enter the sample's DV scores into the "Dependent Variables" box</li>
+            <li>Enter the known population mean into the "Test value" field</li>
+            <li>Check "Effect size" and "Confidence interval" under "Additional Statistics"</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <h3 style="margin-top:0">Independent Samples T-Test:</h3>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0 0 14px" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">t.test(DV ~ grouping_variable, data = df,
+       paired = FALSE, var.equal = TRUE, conf.level = .95)
+
+effsize::cohen.d(DV ~ grouping_variable, data = df,
+                 pooled = TRUE, hedges.correction = FALSE)</code></pre>
+          <h3>Paired Samples T-Test:</h3>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0 0 14px" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">t.test(df$before, df$after,
+       paired = TRUE, alternative = "two.sided", conf.level = .95)
+
+effsize::cohen.d(df$before, df$after, paired = TRUE, hedges.correction = FALSE)</code></pre>
+          <h3>One-Sample T-Test:</h3>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">t.test(df$variable, mu = 100, conf.level = .95)
+
+effsize::cohen.d(df$variable ~ 1, mu = 100, conf.level = .95)</code></pre>
+        </div>
+      </div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>p-value:</strong> The probability of detecting a meaningful relationship/difference when there is none. We are typically looking for a small value (<em>p</em> &lt; .05).</p>
+      <ul>
+        <li>If <em>p</em> &lt; .05, reject the null hypothesis. There IS a significant difference.</li>
+        <li>If <em>p</em> &gt; .05, retain the null hypothesis. There is NO significant difference.</li>
+      </ul>
+      <p><strong>t-value:</strong> The number of estimated standard error of the mean (SEM) units the sample is from the population.</p>
+      <ul>
+        <li>If t-value is small, there is more similarity between the two sample sets.</li>
+        <li>If t-value is large, a large difference exists between the two sample sets.</li>
+        <li>If t-value is negative, it has no bearing on the significance of the difference. It only indicates a reversed directionality of the effect.</li>
+      </ul>
+      <p><strong>SEM:</strong> Average deviation of sample means from the population mean. A measure of sampling error.</p>
+      <ul>
+        <li>If SEM is small, sample means are similar to the population mean, with little sampling error (this is what we want).</li>
+        <li>If SEM is large, sample means are more variable.</li>
+      </ul>
+      <p><strong>df:</strong> Values in a study that have the freedom to vary. Essential for assessing the importance and validity of the null hypothesis.</p>
+      <p><strong>Effect size - Cohen's <em>d</em>:</strong> A measure of the magnitude of the mean difference. Bigger numbers mean a bigger difference between groups in terms of standard deviation.</p>
+      <table>
+        <tr><th>Cohen's d</th><th>Interpretation</th></tr>
+        <tr><td>&lt; .20</td><td>Very small effect size</td></tr>
+        <tr><td>.20 – .49</td><td>Small effect size</td></tr>
+        <tr><td>.50 – .79</td><td>Medium effect size</td></tr>
+        <tr><td>≥ .80</td><td>Large effect size</td></tr>
+      </table>
+      <p><strong>Confidence Interval (CI):</strong> The 95% CI refers to the interval around the mean difference. If the CI does not include zero, the difference is statistically significant at <em>p</em> &lt; .05. If it includes zero, the difference is not significant. In Jamovi, check "Confidence interval" under "Additional Statistics" to get these values. Report the lower and upper bounds in brackets.</p>
+      <h2>APA Format:</h2>
+      <p>Appropriate data visualization: <a href="https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-figures#bar" target="_blank">Bar graphs</a> (with error bars).</p>
+      <p>Sample table: <a href="https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables#tests" target="_blank">https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables#tests</a></p>
+      <p>Sample write-up:</p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A paired-samples t-test compared the average [DV] during [Condition 1] (<em>M</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>SD</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) and [Condition 2] (<em>M</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>SD</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>). There was a significant difference in [DV], <em>t</em>(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> &lt; .05, <em>d</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, 95% CI [<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>]. These results suggest that [DV] increases/decreases from [Condition 1] to [Condition 2].</div></div>
+      <p>Note: Plug in the appropriate test used, means, standard deviations, whether the test was significant, t-value, df, p-level, the strength of the relationship (d), confidence interval, and a conclusion.</p>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isAnova }}">
+    <div>
+      <h1>ANOVA</h1>
+      <h2>Purpose:</h2>
+      <p>An analysis of variance, used to determine if there are any statistically significant differences between the means of three or more independent groups. It does not specify "how" they differ from each other (a post-hoc test can answer this!). There are three kinds of ANOVA: a one-way ANOVA (for between-subjects manipulation where the IV has 3+ levels), repeated measures ANOVA (for within-subjects manipulation where the IV has 3+ levels), and factorial ANOVA (where there are 2+ IVs).</p>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Note: Between-group manipulation (between-subjects study design) means that each group received a different IV treatment condition (level). Within-group manipulation (within-subjects study design) means that every participant experiences every IV treatment condition (level).</div>
+      <h2>Context Used:</h2>
+      <ul>
+        <li>There must be ONE CATEGORICAL IV with 3+ levels, and ONE CONTINUOUS DV, OR</li>
+        <li>There must be TWO OR MORE CATEGORICAL IVs with 2+ levels, and ONE CONTINUOUS DV</li>
+      </ul>
+      <div style="background:oklch(0.97 0.028 85);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.4 0.055 65)"><strong>Do NOT use ANOVA if:</strong> Your IV has only two levels → a t-test is sufficient | Your DV is categorical → use chi-square | You want to predict rather than compare means → use regression | You have a continuous IV → use regression or correlation instead</div>
+      <h2>Assumptions:</h2>
+      <ul>
+        <li><strong>Normality:</strong> The DV should be approximately normally distributed within each group.</li>
+        <li><strong>Independence:</strong> Observations are independent of each other.</li>
+        <li><strong>Homogeneity of variances:</strong> Check with Levene's test. If <em>p</em> &lt; .05, use Welch's ANOVA.</li>
+        <li><strong>Sphericity (repeated measures only):</strong> Variances of the differences between all pairs of conditions should be equal. Check with Mauchly's test. If violated, apply Greenhouse-Geisser correction.</li>
+      </ul>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <h3 style="margin-top:0">One-Way ANOVA:</h3>
+          <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Data setup: Column 1 = IV levels (coded numerically), Column 2 = DV scores.</div>
+          <ol>
+            <li>Click "ANOVA"</li>
+            <li>Click "ANOVA"</li>
+            <li>Move the DV into the "Dependent Variable" box</li>
+            <li>Move the IV into the "Fixed Factors" box</li>
+            <li>Check "η²" under "Effect Size"</li>
+            <li>Check "Homogeneity test" in the "Assumption Checks" menu</li>
+            <li>Move the IV into the right box in the "Post Hoc Tests" menu</li>
+            <li>Check "Tukey" under "Corrections" and "Cohen's d" under "Effect Size" in the "Post Hoc Tests" menu</li>
+          </ol>
+          <h3>Repeated Measures ANOVA:</h3>
+          <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Data setup: Each column represents DV scores at one IV level (one column per condition or time point).</div>
+          <ol>
+            <li>Click "ANOVA"</li>
+            <li>Click "Repeated Measures ANOVA"</li>
+            <li>Label the IV in the bolded text box under "Repeated Measures Factors"</li>
+            <li>Label the IV levels in the remaining text boxes under "Repeated Measures Factors"</li>
+            <li>Move the IV levels from the left box into the corresponding box under "Repeated Measures Cells"</li>
+            <li>Label the DV in the text box under "Dependent Variable Label"</li>
+            <li>Check "η²" under "Effect Size"</li>
+            <li>Check "Homogeneity test" and "Greenhouse-Geisser" under "Assumption Checks"</li>
+            <li>Move the IV into the right box in the "Post Hoc Tests" menu; check "Tukey"</li>
+          </ol>
+          <h3>Factorial ANOVA:</h3>
+          <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Data setup: Column 1 = IV1 levels, Column 2 = IV2 levels, Column 3 = DV scores.</div>
+          <ol>
+            <li>Click "ANOVA"</li>
+            <li>Click "ANOVA"</li>
+            <li>Move the DV into the "Dependent Variable" box</li>
+            <li>Move both IVs into the "Fixed Factors" box</li>
+            <li>Check "η²" under "Effect Size"</li>
+            <li>If any IV has 3+ levels or you reject the null hypothesis: move that IV into the right box in "Post Hoc Tests" and check "Tukey"</li>
+            <li>Click "Exploration" → "Descriptives"; move DV into "Variables," move all IVs into "Split by" for cell means</li>
+            <li>Repeat step 7 with only ONE IV in "Split by" at a time for marginal means</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <h3 style="margin-top:0">One-Way ANOVA:</h3>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0 0 14px" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">model &lt;- aov(DV ~ IV, data = df)
+summary(model)
+
+effectsize::eta_squared(model)
+
+model_aov &lt;- aov(DV ~ Group, data = df)
+PostHocTest(model_aov, method = "hsd")  # DescTools package</code></pre>
+          <h3>Repeated Measures ANOVA:</h3>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0 0 14px" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">model &lt;- aov(DV ~ Time + Error(ID/Time), data = df)
+summary(model)</code></pre>
+          <h3>Factorial ANOVA:</h3>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">model_2way &lt;- aov(DV ~ Factor1 * Factor2, data = df)
+summary(model_2way)
+
+effectsize::eta_squared(model_2way, partial = TRUE)
+
+PostHocTest(model_2way, method = "hsd")</code></pre>
+        </div>
+      </div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>Levene's Test:</strong> Tests homogeneity of variances assumption.</p>
+      <ul>
+        <li>If <em>p</em> &lt; .05 → assumption violated; select Welch's test under "Variances" to continue</li>
+        <li>If <em>p</em> &gt; .05 → assumption satisfied (this is what we want; continue as normal)</li>
+      </ul>
+      <p><strong>F-value:</strong> The ratio of variation between sample means to variation within the samples.</p>
+      <ul>
+        <li>If the f-value is high, there is high variability and a lower p-value.</li>
+        <li>If the f-value is low, there is low variability.</li>
+      </ul>
+      <p><strong>p-value:</strong> The probability of detecting a meaningful difference when there is none. Looking for a small value (<em>p</em> &lt; .05).</p>
+      <ul>
+        <li>If <em>p</em> &lt; .05 → reject the null hypothesis. There IS a difference.</li>
+        <li>If <em>p</em> &gt; .05 → retain the null hypothesis. There is NO difference.</li>
+      </ul>
+      <p><strong>η² (eta-squared):</strong> The proportion of variance in the DV explained by the IV. Even a medium effect (.06) is considered meaningful in human subjects research, where many variables influence behavior simultaneously.</p>
+      <table>
+        <tr><th>η²</th><th>Interpretation</th></tr>
+        <tr><td>≈ .01</td><td>Small effect</td></tr>
+        <tr><td>≈ .06</td><td>Medium effect</td></tr>
+        <tr><td>≈ .14</td><td>Large effect</td></tr>
+      </table>
+      <p>"<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>% of variance in [DV] is explained by [IV]."</p>
+      <h3>Post-Hoc Comparisons:</h3>
+      <p><strong>Cohen's d:</strong> A measure of effect size between specific group pairs.</p>
+      <table>
+        <tr><th>Cohen's d</th><th>Interpretation</th></tr>
+        <tr><td>.20 – .49</td><td>Small</td></tr>
+        <tr><td>.50 – .79</td><td>Medium</td></tr>
+        <tr><td>≥ .80</td><td>Large</td></tr>
+      </table>
+      <p><strong>p-value:</strong> Looking for a small value (<em>p</em> &lt; .05).</p>
+      <ul>
+        <li>If <em>p</em> &lt; .05 → reject the null hypothesis. There IS a difference between this pairwise comparison.</li>
+        <li>If <em>p</em> &gt; .05 → retain the null hypothesis. There is NO difference between this pairwise comparison.</li>
+      </ul>
+      <h2>APA Format:</h2>
+      <p>Appropriate data visualization: <a href="https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-figures#bar" target="_blank">Bar graphs</a> (with error bars).</p>
+      <p>Sample table: <a href="https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables#anova" target="_blank">https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables#anova</a></p>
+      <p>Sample write-up:</p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A one-way ANOVA examined differences in [DV] across [levels of IV]. The test was statistically significant, <em>F</em>(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> &lt; .05, η² = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>. A Tukey HSD post-hoc test indicated that [Group A] (<em>M</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>SD</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) scored significantly higher than [Group B] (<em>M</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>SD</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>). [Group B] and [Group C] did not differ significantly.</div></div>
+      <p>Note: Plug in the appropriate test used, means, standard deviations, whether the test was significant, f-value, df, alpha and p-level, the strength of the relationship (η²), and Tukey test results.</p>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isCorrelation }}">
+    <div>
+      <h1>Correlation</h1>
+      <h2>Purpose:</h2>
+      <p>A correlation measures the strength and direction of the linear relationship between two continuous variables. It does not imply that one variable causes the other.</p>
+      <h2>Context Used:</h2>
+      <ul>
+        <li>There must be TWO CONTINUOUS variables.</li>
+        <li>There is no distinction between IV and DV — correlation is symmetric.</li>
+      </ul>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">If variables are ordinal or the relationship is non-linear, use Spearman's rho instead of Pearson's r.</div>
+      <div style="background:oklch(0.97 0.028 85);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.4 0.055 65)"><strong>Do NOT use correlation if:</strong> You want to predict one variable from another → use regression | Your variables are categorical → use chi-square | You have more than two variables to examine → consider multiple regression or factor analysis</div>
+      <h2>Assumptions:</h2>
+      <ul>
+        <li><strong>Continuous variables:</strong> Both variables must be measured on a continuous scale.</li>
+        <li><strong>Linearity:</strong> The relationship between the two variables should follow a straight-line pattern. Check with a scatterplot.</li>
+        <li><strong>No extreme outliers:</strong> Outliers can heavily distort Pearson's r.</li>
+        <li><strong>Normality:</strong> Both variables should be approximately normally distributed for significance testing to be accurate.</li>
+      </ul>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <ol>
+            <li>Click "Regression"</li>
+            <li>Click "Correlation Matrix"</li>
+            <li>Move both variables into the box on the right</li>
+            <li>Check "Pearson" under "Correlation Coefficients"</li>
+            <li>Check "Report significance" and "Confidence intervals"</li>
+            <li>Check "Correlation matrix plot" under "Plot" for a visual</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">cor.test(df$variable1, df$variable2)
+
+corr.test(df[, c("var1", "var2", "var3")])   # psych package: gives r, p, n</code></pre>
+        </div>
+      </div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>Pearson's r:</strong> Ranges from −1.00 to +1.00. The sign indicates direction; the absolute value indicates strength.</p>
+      <table>
+        <tr><th>|r|</th><th>Strength</th></tr>
+        <tr><td>.00 – .09</td><td>Negligible</td></tr>
+        <tr><td>.10 – .29</td><td>Small</td></tr>
+        <tr><td>.30 – .49</td><td>Medium</td></tr>
+        <tr><td>≥ .50</td><td>Large</td></tr>
+      </table>
+      <ul style="margin-top:8px">
+        <li>Positive r: as one variable increases, the other increases.</li>
+        <li>Negative r: as one variable increases, the other decreases.</li>
+      </ul>
+      <p><strong>p-value:</strong></p>
+      <ul>
+        <li>If <em>p</em> &lt; .05 → there IS a significant association between the two variables.</li>
+        <li>If <em>p</em> &gt; .05 → there is NO significant association.</li>
+      </ul>
+      <p><strong>df:</strong> For correlation, df = <em>N</em> − 2. Report in parentheses after r: e.g., <em>r</em>(38) = .34 means N = 40.</p>
+      <h2>APA Format:</h2>
+      <p>Appropriate data visualization: Scatterplot with line of best fit.</p>
+      <p>Sample write-up:</p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A Pearson correlation examined the relationship between [Variable 1] and [Variable 2]. There was a statistically significant [positive/negative] association, <em>r</em>(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, 95% CI [<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>]. These results suggest that as [Variable 1] increases, [Variable 2] [increases/decreases].</div></div>
+      <p>Note: Report r, df in parentheses, p-value, and 95% CI.</p>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isRegression }}">
+    <div>
+      <h1>Regression</h1>
+      <h2>Purpose:</h2>
+      <p>Regression predicts or explains variability in a continuous outcome (DV) from one or more predictor variables (IVs). Simple linear regression uses one predictor; multiple regression uses two or more. In experimental designs with random assignment, regression can support causal inference — in correlational designs, it cannot.</p>
+      <h2>Context Used:</h2>
+      <ul>
+        <li>ONE continuous DV</li>
+        <li>ONE or more continuous or categorical IVs (predictors)</li>
+        <li>A theoretical reason to predict the DV from the IV(s)</li>
+      </ul>
+      <div style="background:oklch(0.97 0.028 85);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.4 0.055 65)"><strong>Do NOT use regression if:</strong> Your IV has only 2 groups and you just want to compare means → use a t-test | Your DV is categorical (yes/no, pass/fail) → use logistic regression | You have no theoretical reason to predict Y from X → use correlation instead | Assumptions below are violated</div>
+      <h2>Assumptions:</h2>
+      <ul>
+        <li><strong>Linearity:</strong> The relationship between each IV and the DV should be linear. Check with a residuals vs. fitted values plot — points should scatter randomly around zero with no curve.</li>
+        <li><strong>Independence of residuals:</strong> Residuals should not be related to each other. Generally met by design in psychology research.</li>
+        <li><strong>Homoscedasticity:</strong> The spread of residuals should be roughly equal across all predicted values. Look for a consistent band, not a funnel shape, in the residuals plot.</li>
+        <li><strong>No multicollinearity (multiple regression only):</strong> IVs should not be excessively correlated with each other. Check "Collinearity statistics" in Jamovi — a VIF &gt; 10 indicates a problem.</li>
+      </ul>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Check all four assumptions under "Assumption Checks" in Jamovi before interpreting output.</div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <ol>
+            <li>Click "Regression"</li>
+            <li>Click "Linear Regression"</li>
+            <li>Move the DV into the "Dependent Variable" box</li>
+            <li>Move continuous IVs into "Covariates"; move categorical IVs into "Factors"</li>
+            <li>Under "Model Fit," check "R²" and "F test"</li>
+            <li>Under "Model Coefficients," check "Standardized estimate" and "Confidence interval"</li>
+            <li>Under "Assumption Checks," check "Residuals plots" and "Collinearity statistics"</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">model &lt;- lm(outcome ~ predictor, data = df)
+summary(model)
+mcSummary(model)   # more detailed output
+
+plot(model)   # 4 diagnostic plots</code></pre>
+        </div>
+      </div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>R² (R-squared):</strong> The proportion of variance in the DV explained by the full model. Ranges from 0 to 1. Report as a percentage: "The model explained <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>% of the variance in [DV]."</p>
+      <p><strong>F-statistic and p-value:</strong></p>
+      <ul>
+        <li>If <em>p</em> &lt; .05 → the overall model significantly predicts the DV.</li>
+        <li>If <em>p</em> &gt; .05 → the model does not significantly predict the DV.</li>
+      </ul>
+      <p><strong>B (unstandardized coefficient):</strong> For every 1-unit increase in the IV, the DV changes by B units. Interpreted in the original units of measurement. The absolute size of B should be interpreted in context — do not assess it relative to 1.</p>
+      <p><strong>β (standardized coefficient):</strong> B expressed in standard deviation units. Allows comparison of predictor importance across variables measured on different scales. A larger |β| means a stronger unique contribution to predicting the DV.</p>
+      <p><strong>p-value (for each predictor):</strong></p>
+      <ul>
+        <li>If <em>p</em> &lt; .05 → this predictor significantly predicts the DV.</li>
+        <li>If <em>p</em> &gt; .05 → this predictor does not significantly predict the DV.</li>
+      </ul>
+      <h2>APA Format:</h2>
+      <p>Appropriate data visualization: Scatterplot with regression line (simple regression). For multiple regression, use a regression table.</p>
+      <p>Sample write-up:</p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A simple linear regression examined whether [IV] predicted [DV]. The model was statistically significant, <em>F</em>(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> &lt; .05, <em>R</em>² = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>. [IV] significantly predicted [DV], <em>B</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, β = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>t</em>(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, 95% CI [<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>].</div></div>
+      <p>Note: For multiple regression, report these statistics for each predictor in a regression table. Always report both B and β.</p>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isMediation }}">
+    <div>
+      <h1>Mediation</h1>
+      <h2>Purpose:</h2>
+      <p>Mediation tests whether the effect of an IV (X) on a DV (Y) operates through a third variable — the mediator (M). Rather than asking whether X affects Y, mediation asks <em>why</em> or <em>how</em> X affects Y.</p>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)"><strong>Mediation vs. moderation:</strong> A mediator explains the mechanism (how X affects Y). A moderator changes the strength of that effect (when or for whom X affects Y). These are different questions requiring different analyses.</div>
+      <h2>Understanding the Paths:</h2>
+      <p>Before interpreting output, it helps to know what each path label means:</p>
+      <table>
+        <tr><th>Path</th><th>What it represents</th></tr>
+        <tr><td><strong>a</strong></td><td>X → M: Does the IV predict the mediator?</td></tr>
+        <tr><td><strong>b</strong></td><td>M → Y (controlling for X): Does the mediator predict the DV?</td></tr>
+        <tr><td><strong>c</strong></td><td>X → Y (total effect, ignoring M)</td></tr>
+        <tr><td><strong>c'</strong></td><td>X → Y (direct effect, controlling for M)</td></tr>
+        <tr><td><strong>a × b</strong></td><td>Indirect effect: the portion of X's effect on Y that goes through M</td></tr>
+      </table>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">The key test in mediation is whether the <strong>indirect effect (a × b)</strong> is significant, determined by bootstrapped confidence intervals that exclude zero.</div>
+      <h2>Context Used:</h2>
+      <ul>
+        <li>ONE continuous IV (X), ONE continuous mediator (M), ONE continuous DV (Y)</li>
+        <li>A theoretically justified causal order: X causes M causes Y</li>
+      </ul>
+      <div style="background:oklch(0.97 0.028 85);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.4 0.055 65)"><strong>Do NOT use mediation if:</strong> You lack a theory-driven causal order — three correlated variables do not constitute mediation | Your sample is small (N &lt; 100 for simple mediation) | All variables are measured at the same time point — cross-sectional mediation cannot confirm causation</div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Requires the <strong>medmod</strong> module. Install via Modules → jamovi library → search "medmod."</div>
+          <ol>
+            <li>Click "medmod" → "Mediation"</li>
+            <li>Move the IV (X) into the "Predictor" box</li>
+            <li>Move the mediator (M) into the "Mediator" box</li>
+            <li>Move the DV (Y) into the "Outcome" box</li>
+            <li>Under "Estimates," check "Path coefficients," "Indirect effect," and "Confidence intervals"</li>
+            <li>Set bootstrapping to at least 5,000 samples</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">library(lavaan)
+
+med_model &lt;- '
+  Y ~ c * X
+  M ~ a * X
+  Y ~ b * M
+  indirect := a * b
+  total    := c + (a * b)
+'
+
+med_fit &lt;- sem(med_model, data = df, se = "bootstrap", bootstrap = 1000)
+summary(med_fit, fit.measures = TRUE)</code></pre>
+        </div>
+      </div>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)"><strong>Note on total effect:</strong> A significant total effect (path c) is no longer required before testing mediation under current best practices (Hayes, 2018). The indirect effect can be significant even when the total effect is not.</div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>Indirect effect (a × b):</strong> The critical output. If the bootstrapped 95% CI does <strong>not include zero</strong>, the indirect effect is significant and mediation is supported.</p>
+      <p><strong>Types of mediation:</strong></p>
+      <ul>
+        <li><strong>Full mediation:</strong> Path c was significant before adding M, but the direct effect (c') becomes non-significant after M is included. M fully accounts for the X → Y relationship.</li>
+        <li><strong>Partial mediation:</strong> The direct effect (c') remains significant after adding M but is reduced in magnitude. Both a direct path and an indirect path through M exist. This is the more common finding in psychology research.</li>
+      </ul>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Whether mediation occurred is determined by the indirect effect CI excluding zero — not by the percentage of variance explained alone.</div>
+      <h2>APA Format:</h2>
+      <p>Appropriate data visualization: Path diagram labeling the a, b, c, and c' paths with coefficients.</p>
+      <p>Sample write-up:</p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A mediation analysis tested whether [M] mediated the relationship between [X] and [Y]. The indirect effect was statistically significant, <em>B</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, 95% CI [<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>], indicating that [X] predicted [M] (path a: <em>B</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>), which in turn predicted [Y] controlling for [X] (path b: <em>B</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>). The direct effect of [X] on [Y] [was/was not] significant after accounting for [M] (path c': <em>B</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>), suggesting [full/partial] mediation.</div></div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isModeration }}">
+    <div>
+      <h1>Moderation</h1>
+      <h2>Purpose:</h2>
+      <p>Moderation tests whether the relationship between X and Y changes depending on the level of a third variable — the moderator (W). It answers: <em>does the effect of X on Y depend on W?</em> This is also called an interaction effect. The moderator does not explain <em>how</em> X affects Y — it tells you <em>under what conditions</em> or <em>for whom</em> the effect is stronger, weaker, or reversed.</p>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)"><strong>Mediation vs. moderation:</strong> A mediator explains the mechanism (how X affects Y). A moderator specifies when or for whom X affects Y. These are fundamentally different questions.</div>
+      <h2>Context Used:</h2>
+      <ul>
+        <li>ONE continuous or categorical IV (X)</li>
+        <li>ONE continuous or categorical moderator (W)</li>
+        <li>ONE continuous DV (Y)</li>
+        <li>A theoretical reason to expect the effect of X on Y to differ across levels of W</li>
+      </ul>
+      <p>Common psychology examples:</p>
+      <ul>
+        <li>Does social support (W) buffer the effect of stress (X) on depression (Y)?</li>
+        <li>Is the association between parenting warmth (X) and child anxiety (Y) stronger for boys than girls (W)?</li>
+        <li>Does the effect of therapy type (X) on symptom reduction (Y) differ by baseline severity (W)?</li>
+      </ul>
+      <div style="background:oklch(0.97 0.028 85);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.4 0.055 65)"><strong>Do NOT use moderation if:</strong> You have no theory-driven reason to expect the effect to vary — fishing for interactions inflates Type I error | Your sample is small (aim for N ≥ 200) | You want to know why the effect occurs, not when → use mediation instead | You have more than one DV → use MANOVA or SEM</div>
+      <h2>Assumptions:</h2>
+      <p>Moderation is tested through regression, so the same regression assumptions apply:</p>
+      <ul>
+        <li><strong>Linearity</strong></li>
+        <li><strong>Independence of residuals</strong></li>
+        <li><strong>Homoscedasticity</strong></li>
+        <li><strong>No excessive multicollinearity:</strong> Some correlation between X and the interaction term (X × W) is expected — this is why mean-centering continuous variables before computing the interaction is recommended.</li>
+      </ul>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Requires the <strong>medmod</strong> module. Install via Modules → jamovi library → search "medmod."</div>
+          <h3 style="margin-top:0">Mean-Centering (recommended before running):</h3>
+          <ol>
+            <li>Click "Data" → "Compute"</li>
+            <li>Create: X_c = X − MEAN(X)</li>
+            <li>Repeat for the moderator: W_c = W − MEAN(W)</li>
+          </ol>
+          <h3>Running the Moderation:</h3>
+          <ol>
+            <li>Click "medmod" → "Moderation"</li>
+            <li>Move the DV into the "Dependent Variable" box</li>
+            <li>Move the IV (X_c) into the "Predictor" box</li>
+            <li>Move the moderator (W_c) into the "Moderator" box</li>
+            <li>Under "Estimates," check "Labels," "Test statistics," and "Confidence interval"</li>
+            <li>Under "Simple Slopes," check "Simple slopes plot"</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">library(interactions)
+
+df$X_c &lt;- scale(df$X, center = TRUE, scale = FALSE)
+df$W_c &lt;- scale(df$W, center = TRUE, scale = FALSE)
+df$XW  &lt;- df$X_c * df$W_c
+
+mod_model &lt;- lm(Y ~ X_c + W_c + XW, data = df)
+mcSummary(mod_model)
+
+sim_slopes(mod_model, pred = X_c, modx = W_c, jnplot = FALSE)</code></pre>
+        </div>
+      </div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>Interaction term (X × W):</strong></p>
+      <ul>
+        <li>If <em>p</em> &lt; .05 → moderation is significant; the effect of X on Y depends on W.</li>
+        <li>If <em>p</em> &gt; .05 → moderation is not significant; the relationship does not significantly change across levels of W.</li>
+      </ul>
+      <p><strong>Simple slopes:</strong> When the interaction is significant, interpret the effect of X on Y at three levels of W: low (−1 SD), mean, and high (+1 SD). A crossover interaction — where the slope reverses direction across levels of W — is the strongest form of moderation.</p>
+      <p><strong>Simple slopes plot:</strong> The most intuitive way to report moderation. Shows the regression line of X on Y separately for low, mean, and high W. Non-parallel lines indicate an interaction. Always include this plot when reporting moderation results.</p>
+      <p><strong>β and R²:</strong> Interpreted the same as in standard regression.</p>
+      <h2>APA Format:</h2>
+      <p>Appropriate data visualization: Simple slopes plot. See <a href="https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-figures" target="_blank">APA sample figures</a>.</p>
+      <p>Sample write-up:</p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A moderated regression analysis examined whether [W] moderated the relationship between [X] and [Y]. After mean-centering, the interaction term ([X] × [W]) was entered alongside the main effects. The overall model was significant, <em>F</em>(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> &lt; .05, <em>R</em>² = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>. The interaction term was significant, <em>b</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>t</em>(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, 95% CI [<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>]. Simple slopes analysis revealed that the effect of [X] on [Y] was significant at low [W] (<em>b</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) but not at high [W] (<em>b</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>).</div></div>
+      <p>Note: Report b (unstandardized), t, df, p, and 95% CI for the interaction term. Report simple slopes at all three levels of W.</p>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isChisquare }}">
+    <div>
+      <h1>Chi-Square</h1>
+      <h2>Purpose:</h2>
+      <p>Chi-square tests examine categorical data. There are two types:</p>
+      <ul>
+        <li><strong>Goodness of Fit:</strong> Tests whether the observed frequency distribution of ONE categorical variable matches an expected distribution.</li>
+        <li><strong>Test of Independence:</strong> Tests whether TWO categorical variables are associated with each other.</li>
+      </ul>
+      <h2>Context Used:</h2>
+      <ul>
+        <li><strong>Goodness of Fit:</strong> ONE categorical variable with 2+ levels; comparing observed frequencies to expected frequencies.</li>
+        <li><strong>Test of Independence:</strong> TWO categorical variables; testing whether they are associated.</li>
+      </ul>
+      <div style="background:oklch(0.97 0.028 85);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.4 0.055 65)"><strong>Do NOT use chi-square if:</strong> Your variables are continuous → use correlation or regression | You want to compare means → use t-test or ANOVA | Expected cell frequencies are below 5 in more than 20% of cells → use Fisher's Exact Test</div>
+      <h2>Assumptions:</h2>
+      <ul>
+        <li><strong>Categorical data:</strong> Both variables must be categorical. Chi-square cannot be used with continuous variables.</li>
+        <li><strong>Independence of observations:</strong> Each participant contributes to only one cell in the frequency table.</li>
+        <li><strong>Expected cell frequency:</strong> Expected frequencies in each cell should be at least 5. If violated, use Fisher's Exact Test (available in Jamovi under the same menu).</li>
+      </ul>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Chi-square does <strong>not</strong> assume normality — that assumption applies to tests with continuous DVs only.</div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <h3 style="margin-top:0">Goodness of Fit:</h3>
+          <ol>
+            <li>Click "Frequencies" → "One Sample Proportion Tests" → "N outcomes: χ²"</li>
+            <li>Move the categorical variable into the "Variable" box</li>
+            <li>Under "Expected Proportions," enter the expected proportion for each level</li>
+            <li>Check "χ² test"</li>
+          </ol>
+          <h3>Test of Independence:</h3>
+          <ol>
+            <li>Click "Frequencies" → "Independent Samples" → "χ² test of association"</li>
+            <li>Move one variable into "Rows" and the other into "Columns"</li>
+            <li>Check "χ²" under "Statistics"</li>
+            <li>Check "Phi and Cramér's V" for effect size</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <h3 style="margin-top:0">Goodness of Fit:</h3>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0 0 14px" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">observed &lt;- table(df$variable)
+expected_prop &lt;- c(0.55, 0.25, 0.15, 0.05)
+
+chisq.test(x = observed, p = expected_prop)</code></pre>
+          <h3>Test of Independence:</h3>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">tbl &lt;- table(df$variable1, df$variable2)
+chisq.test(tbl)
+
+cramerV(tbl)    # Cramer's V — DescTools package</code></pre>
+        </div>
+      </div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>p-value:</strong></p>
+      <ul>
+        <li>If <em>p</em> &lt; .05 → reject the null hypothesis. There IS a significant difference or association.</li>
+        <li>If <em>p</em> &gt; .05 → retain the null hypothesis. No significant difference or association.</li>
+      </ul>
+      <p><strong>Effect size — Cramér's V (Test of Independence only):</strong> Ranges from 0 to 1. Benchmarks for a 2×2 table (Cohen, 1988):</p>
+      <table>
+        <tr><th>Cramér's V</th><th>Interpretation</th></tr>
+        <tr><td>≈ .10</td><td>Small effect</td></tr>
+        <tr><td>≈ .30</td><td>Medium effect</td></tr>
+        <tr><td>≈ .50</td><td>Large effect</td></tr>
+      </table>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Cramér's V benchmarks shift for larger tables (more categories). The values above apply to 2×2 tables. Cramér's V is not applicable for Goodness of Fit tests.</div>
+      <h2>APA Format:</h2>
+      <p>Sample write-ups:</p>
+      <p><strong>Goodness of Fit:</strong></p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A chi-square goodness of fit test examined whether attachment style was equally distributed in the sample. Observed frequencies were: secure (<em>n</em> = 48), anxious (<em>n</em> = 27), and avoidant (<em>n</em> = 25). The test was statistically significant, χ²(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>N</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, indicating that attachment styles were not equally distributed in this sample.</div></div>
+      <p><strong>Test of Independence:</strong></p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A chi-square test of independence examined whether biological sex was associated with anxiety disorder diagnosis. The association was statistically significant, χ²(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>N</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, Cramér's <em>V</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, indicating a [small/medium/large] association between sex and anxiety diagnosis.</div></div>
+      <p>Note: For Test of Independence, always report Cramér's V alongside χ², df, N, and p.</p>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isSem }}">
+    <div>
+      <h1>Structural Equation Modeling (SEM)</h1>
+      <h2>Purpose:</h2>
+      <p>SEM simultaneously estimates relationships among multiple variables, including latent variables — constructs measured indirectly through observed indicators such as survey items. It combines factor analysis and path analysis in a single model.</p>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">SEM is <strong>confirmatory</strong>, not exploratory. Your model should be grounded in an established theoretical framework before running the analysis.</div>
+      <h2>Context Used:</h2>
+      <ul>
+        <li>You have multiple observed variables (e.g., survey items) measuring one or more latent constructs.</li>
+        <li>You want to test a theoretically derived structural model with directional paths.</li>
+        <li>You have a large enough sample (generally N ≥ 200).</li>
+      </ul>
+      <h2>Assumptions:</h2>
+      <ul>
+        <li><strong>Large sample size:</strong> At least 10 observations per estimated parameter; N ≥ 200 recommended for stable estimates.</li>
+        <li><strong>Multivariate normality:</strong> Observed variables should be approximately normally distributed. Severe non-normality inflates χ² fit statistics.</li>
+        <li><strong>Theory-driven model:</strong> Testing multiple models until one fits ("model fishing") inflates Type I error. Specify your model before looking at the data.</li>
+        <li><strong>Sufficient indicators:</strong> Each latent variable should have at least 3 observed indicators for the model to be identified.</li>
+      </ul>
+      <div style="background:oklch(0.97 0.028 85);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.4 0.055 65)"><strong>Do NOT use SEM if:</strong> Your sample is small (N &lt; 200) | You are exploring without a prior theoretical model → use EFA or regression first | All variables are directly observed with no latent constructs → use path analysis or multiple regression | You have not yet worked through regression and factor analysis</div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Requires the <strong>semlj</strong> module. Install via Modules → jamovi library → search "semlj."</div>
+          <ol>
+            <li>Click "SEM" → "semlj"</li>
+            <li>Specify your measurement model in the syntax editor using lavaan syntax: <code>latent =~ item1 + item2 + item3</code></li>
+            <li>Specify structural paths: <code>Y ~ X</code></li>
+            <li>Under "Fit Indices," check CFI, TLI, RMSEA, and SRMR</li>
+            <li>Under "Parameters," check "Estimates" and "Standard errors"</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">sem_model &lt;- '
+  LatentX =~ x1 + x2 + x3
+  LatentM =~ m1 + m2 + m3
+  LatentY =~ y1 + y2 + y3
+
+  LatentM ~ a * LatentX
+  LatentY ~ b * LatentM + c * LatentX
+
+  indirect := a * b
+  total    := c + (a * b)
+'
+
+sem_fit &lt;- sem(sem_model, data = df, missing = "fiml", estimator = "ML")
+summary(sem_fit, fit.measures = TRUE, standardized = TRUE, rsquare = TRUE)</code></pre>
+        </div>
+      </div>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">For full latent variable models, the syntax editor within semlj is required. A tutorial video is strongly recommended for first-time users.</div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>Chi-Square (χ²):</strong> Unlike other tests, in SEM a <strong>non-significant</strong> χ² (<em>p</em> &gt; .05) indicates good model fit — the model-implied covariances do not significantly differ from the observed covariances. However, χ² is highly sensitive to sample size: with N &gt; 300, even minor misspecification will produce a significant χ². Always report χ² alongside other fit indices.</p>
+      <p><strong>CFI (Comparative Fit Index):</strong></p>
+      <ul>
+        <li>CFI &gt; .95 = good fit</li>
+        <li>CFI .90 – .95 = acceptable fit</li>
+        <li>CFI &lt; .90 = poor fit</li>
+      </ul>
+      <p><strong>TLI (Tucker-Lewis Index):</strong></p>
+      <ul>
+        <li>TLI &gt; .95 = good fit</li>
+        <li>TLI .90 – .95 = acceptable fit</li>
+        <li>TLI &lt; .90 = poor fit</li>
+      </ul>
+      <p><strong>RMSEA (Root Mean Square Error of Approximation):</strong></p>
+      <ul>
+        <li>RMSEA &lt; .05 = good fit</li>
+        <li>RMSEA .05 – .08 = acceptable fit</li>
+        <li>RMSEA &gt; .10 = poor fit</li>
+      </ul>
+      <p>Also report the 90% CI around RMSEA. A narrower CI reflects more precise estimates.</p>
+      <p><strong>AIC (Akaike Information Criterion):</strong> Used to compare competing models. A lower AIC indicates better fit. Only meaningful in comparison — not in isolation.</p>
+      <p><strong>Path coefficients:</strong> Interpreted similarly to β in regression. Each represents the unique directional relationship between two variables in the model, controlling for all others.</p>
+      <h2>APA Format:</h2>
+      <p>Sample write-up:</p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button onClick="{{ copy }}" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A structural equation model tested whether [X] predicted [Y] through [latent construct]. The model demonstrated acceptable fit: χ²(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, CFI = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, TLI = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, RMSEA = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, 90% CI [<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>]. The standardized path from [X] to [Y] was significant (β = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>), indicating that [conclusion].</div></div>
+      <p>Note: Always report χ², df, p, CFI, TLI, RMSEA (with 90% CI), and standardized path coefficients. Include a path diagram as a figure.</p>
+    </div>
+    </sc-if>
+
+   <footer style="margin-top:80px;padding:26px 0 34px;border-top:1px solid rgba(30,29,26,.12);font-size:12.5px;line-height:1.75;color:#8a867e;max-width:720px">
+     <p style="margin:0">Copyright © 2025 Natalie Byrd</p>
+     <p style="margin:6px 0 0">Proper credit to this website is required if used as a course resource. Please include the following citation in your course syllabus:</p>
+     <p style="margin:4px 0 0">Byrd, N. S. (2024). <em>PsycStats ToolKit.</em> <a href="https://nsbyrd.github.io/nsbyrd/" target="_blank">https://nsbyrd.github.io/nsbyrd/</a></p>
+   </footer>
+  </div></main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;numberedTopics&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;homeTopicsLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;two columns&quot;,&quot;single list&quot;],&quot;default&quot;:&quot;two columns&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Home&quot;}}">
+const TOPICS = [
+  ['descriptives', 'Descriptive Statistics'],
+  ['ttest', 'T-Tests'],
+  ['anova', 'ANOVA'],
+  ['correlation', 'Correlation'],
+  ['regression', 'Regression'],
+  ['mediation', 'Mediation'],
+  ['moderation', 'Moderation'],
+  ['chisquare', 'Chi-Square'],
+  ['sem', 'SEM']
+];
+
+class Component extends DCLogic {
+  state = { page: 'home' };
+
+  copy = (e) => {
+    const btn = e.currentTarget;
+    const box = btn.closest('[data-copy]');
+    const target = box && box.querySelector('[data-copy-text]');
+    const text = target ? target.innerText : '';
+    if (navigator.clipboard) navigator.clipboard.writeText(text);
+    const old = btn.textContent;
+    btn.textContent = 'Copied';
+    clearTimeout(this._copyTimer);
+    this._copyTimer = setTimeout(() => { btn.textContent = old; }, 1200);
+  };
+
+  go(p) {
+    this.setState({ page: p });
+    if (typeof window !== 'undefined') window.scrollTo(0, 0);
+  }
+
+  renderVals() {
+    const page = this.state.page;
+    const numbered = this.props.numberedTopics ?? true;
+    const cols = (this.props.homeTopicsLayout ?? 'two columns') === 'two columns';
+
+    const base = {
+      display: 'flex', gap: '11px', alignItems: 'baseline',
+      padding: '6px 10px', cursor: 'pointer', fontSize: '14.5px',
+      color: '#4a4741', transition: 'background 120ms ease'
+    };
+
+    const items = TOPICS.map(([id, label], i) => {
+      const active = page === id;
+      return {
+        id, label,
+        num: numbered ? String(i + 1).padStart(2, '0') : '·',
+        onClick: () => this.go(id),
+        style: active
+          ? Object.assign({}, base, {
+              color: '#1e1d1a', fontWeight: 600,
+              background: 'rgba(30,29,26,.055)',
+              boxShadow: 'inset 2px 0 0 oklch(0.48 0.09 250)'
+            })
+          : base,
+        numStyle: {
+          font: '500 11px ui-monospace,Menlo,monospace',
+          color: active ? 'oklch(0.48 0.09 250)' : '#a8a49b'
+        }
+      };
+    });
+
+    const nav = { home: () => this.go('home') };
+    TOPICS.forEach(([id]) => { nav[id] = () => this.go(id); });
+
+    return {
+      items, nav, copy: this.copy,
+      homeItems: TOPICS.map(([id, label]) => ({
+        id, label, dot: '→', onClick: () => this.go(id)
+      })),
+      homeListStyle: cols
+        ? { display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(230px,1fr))', columnGap: '32px', margin: '14px 0 0' }
+        : { display: 'flex', flexDirection: 'column', margin: '14px 0 0', maxWidth: '420px' },
+      isHome: page === 'home',
+      isDescriptives: page === 'descriptives',
+      isTtest: page === 'ttest',
+      isAnova: page === 'anova',
+      isCorrelation: page === 'correlation',
+      isRegression: page === 'regression',
+      isMediation: page === 'mediation',
+      isModeration: page === 'moderation',
+      isChisquare: page === 'chisquare',
+      isSem: page === 'sem'
+    };
+  }
+}
+</script>
+</body>
+</html>
