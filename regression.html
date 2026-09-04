@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regression · PsycStats ToolKit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <a class="logo-link" href="index.html">
+      <div class="logo-title">PsycStats ToolKit</div>
+      <div class="logo-subtitle">PSYCHOLOGY STATISTICS HELP | JAMOVI AND R</div>
+    </a>
+    <nav class="sidebar-nav">
+      <a class="nav-item" href="descriptives.html"><span class="nav-num">01</span><span>Descriptive Statistics</span></a>
+      <a class="nav-item" href="ttest.html"><span class="nav-num">02</span><span>T-Tests</span></a>
+      <a class="nav-item" href="anova.html"><span class="nav-num">03</span><span>ANOVA</span></a>
+      <a class="nav-item" href="correlation.html"><span class="nav-num">04</span><span>Correlation</span></a>
+      <a class="nav-item active" href="regression.html"><span class="nav-num">05</span><span>Regression</span></a>
+      <a class="nav-item" href="mediation.html"><span class="nav-num">06</span><span>Mediation</span></a>
+      <a class="nav-item" href="moderation.html"><span class="nav-num">07</span><span>Moderation</span></a>
+      <a class="nav-item" href="chisquare.html"><span class="nav-num">08</span><span>Chi-Square</span></a>
+      <a class="nav-item" href="sem.html"><span class="nav-num">09</span><span>Structural Equation Modeling (SEM)</span></a>
+    </nav>
+    <div class="last-update">Last update: 9/05/2026</div>
+  </aside>
+
+  <main class="content">
+   <div class="content-inner">
+
+<div>
+      <h1>Regression</h1>
+      <h2>Purpose:</h2>
+      <p>Regression predicts or explains variability in a continuous outcome (DV) from one or more predictor variables (IVs). Simple linear regression uses one predictor; multiple regression uses two or more. In experimental designs with random assignment, regression can support causal inference — in correlational designs, it cannot.</p>
+      <h2>Context Used:</h2>
+      <ul>
+        <li>ONE continuous DV</li>
+        <li>ONE or more continuous or categorical IVs (predictors)</li>
+        <li>A theoretical reason to predict the DV from the IV(s)</li>
+      </ul>
+      <div style="background:oklch(0.97 0.028 85);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.4 0.055 65)"><strong>Do NOT use regression if:</strong> Your IV has only 2 groups and you just want to compare means → use a t-test | Your DV is categorical (yes/no, pass/fail) → use logistic regression | You have no theoretical reason to predict Y from X → use correlation instead | Assumptions below are violated</div>
+      <h2>Assumptions:</h2>
+      <ul>
+        <li><strong>Linearity:</strong> The relationship between each IV and the DV should be linear. Check with a residuals vs. fitted values plot — points should scatter randomly around zero with no curve.</li>
+        <li><strong>Independence of residuals:</strong> Residuals should not be related to each other. Generally met by design in psychology research.</li>
+        <li><strong>Homoscedasticity:</strong> The spread of residuals should be roughly equal across all predicted values. Look for a consistent band, not a funnel shape, in the residuals plot.</li>
+        <li><strong>No multicollinearity (multiple regression only):</strong> IVs should not be excessively correlated with each other. Check "Collinearity statistics" in Jamovi — a VIF &gt; 10 indicates a problem.</li>
+      </ul>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Check all four assumptions under "Assumption Checks" in Jamovi before interpreting output.</div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <ol>
+            <li>Click "Regression"</li>
+            <li>Click "Linear Regression"</li>
+            <li>Move the DV into the "Dependent Variable" box</li>
+            <li>Move continuous IVs into "Covariates"; move categorical IVs into "Factors"</li>
+            <li>Under "Model Fit," check "R²" and "F test"</li>
+            <li>Under "Model Coefficients," check "Standardized estimate" and "Confidence interval"</li>
+            <li>Under "Assumption Checks," check "Residuals plots" and "Collinearity statistics"</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button class="copy-btn" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">model &lt;- lm(outcome ~ predictor, data = df)
+summary(model)
+mcSummary(model)   # more detailed output
+
+plot(model)   # 4 diagnostic plots</code></pre>
+        </div>
+      </div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>R² (R-squared):</strong> The proportion of variance in the DV explained by the full model. Ranges from 0 to 1. Report as a percentage: "The model explained <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>% of the variance in [DV]."</p>
+      <p><strong>F-statistic and p-value:</strong></p>
+      <ul>
+        <li>If <em>p</em> &lt; .05 → the overall model significantly predicts the DV.</li>
+        <li>If <em>p</em> &gt; .05 → the model does not significantly predict the DV.</li>
+      </ul>
+      <p><strong>B (unstandardized coefficient):</strong> For every 1-unit increase in the IV, the DV changes by B units. Interpreted in the original units of measurement. The absolute size of B should be interpreted in context — do not assess it relative to 1.</p>
+      <p><strong>β (standardized coefficient):</strong> B expressed in standard deviation units. Allows comparison of predictor importance across variables measured on different scales. A larger |β| means a stronger unique contribution to predicting the DV.</p>
+      <p><strong>p-value (for each predictor):</strong></p>
+      <ul>
+        <li>If <em>p</em> &lt; .05 → this predictor significantly predicts the DV.</li>
+        <li>If <em>p</em> &gt; .05 → this predictor does not significantly predict the DV.</li>
+      </ul>
+      <h2>APA Format:</h2>
+      <p>Appropriate data visualization: Scatterplot with regression line (simple regression). For multiple regression, use a regression table.</p>
+      <p>Sample write-up:</p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button class="copy-btn" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A simple linear regression examined whether [IV] predicted [DV]. The model was statistically significant, <em>F</em>(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> &lt; .05, <em>R</em>² = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>. [IV] significantly predicted [DV], <em>B</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, β = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>t</em>(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, 95% CI [<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>].</div></div>
+      <p>Note: For multiple regression, report these statistics for each predictor in a regression table. Always report both B and β.</p>
+    </div>
+
+   <footer class="site-footer">
+     <p style="margin:0">Copyright &copy; 2025 Natalie Byrd</p>
+     <p style="margin:6px 0 0">Proper credit to this website is required if used as a course resource. Please include the following citation in your course syllabus:</p>
+     <p style="margin:4px 0 0">Byrd, N. S. (2024). <em>PsycStats ToolKit.</em> <a href="https://nsbyrd.github.io/PsycStatsToolKit/" target="_blank">https://nsbyrd.github.io/PsycStatsToolKit/</a></p>
+   </footer>
+   </div>
+  </main>
+</div>
+<script src="script.js" defer></script>
+</body>
+</html>

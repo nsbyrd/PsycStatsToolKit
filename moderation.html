@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moderation · PsycStats ToolKit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <a class="logo-link" href="index.html">
+      <div class="logo-title">PsycStats ToolKit</div>
+      <div class="logo-subtitle">PSYCHOLOGY STATISTICS HELP | JAMOVI AND R</div>
+    </a>
+    <nav class="sidebar-nav">
+      <a class="nav-item" href="descriptives.html"><span class="nav-num">01</span><span>Descriptive Statistics</span></a>
+      <a class="nav-item" href="ttest.html"><span class="nav-num">02</span><span>T-Tests</span></a>
+      <a class="nav-item" href="anova.html"><span class="nav-num">03</span><span>ANOVA</span></a>
+      <a class="nav-item" href="correlation.html"><span class="nav-num">04</span><span>Correlation</span></a>
+      <a class="nav-item" href="regression.html"><span class="nav-num">05</span><span>Regression</span></a>
+      <a class="nav-item" href="mediation.html"><span class="nav-num">06</span><span>Mediation</span></a>
+      <a class="nav-item active" href="moderation.html"><span class="nav-num">07</span><span>Moderation</span></a>
+      <a class="nav-item" href="chisquare.html"><span class="nav-num">08</span><span>Chi-Square</span></a>
+      <a class="nav-item" href="sem.html"><span class="nav-num">09</span><span>Structural Equation Modeling (SEM)</span></a>
+    </nav>
+    <div class="last-update">Last update: 9/05/2026</div>
+  </aside>
+
+  <main class="content">
+   <div class="content-inner">
+
+<div>
+      <h1>Moderation</h1>
+      <h2>Purpose:</h2>
+      <p>Moderation tests whether the relationship between X and Y changes depending on the level of a third variable — the moderator (W). It answers: <em>does the effect of X on Y depend on W?</em> This is also called an interaction effect. The moderator does not explain <em>how</em> X affects Y — it tells you <em>under what conditions</em> or <em>for whom</em> the effect is stronger, weaker, or reversed.</p>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)"><strong>Mediation vs. moderation:</strong> A mediator explains the mechanism (how X affects Y). A moderator specifies when or for whom X affects Y. These are fundamentally different questions.</div>
+      <h2>Context Used:</h2>
+      <ul>
+        <li>ONE continuous or categorical IV (X)</li>
+        <li>ONE continuous or categorical moderator (W)</li>
+        <li>ONE continuous DV (Y)</li>
+        <li>A theoretical reason to expect the effect of X on Y to differ across levels of W</li>
+      </ul>
+      <p>Common psychology examples:</p>
+      <ul>
+        <li>Does social support (W) buffer the effect of stress (X) on depression (Y)?</li>
+        <li>Is the association between parenting warmth (X) and child anxiety (Y) stronger for boys than girls (W)?</li>
+        <li>Does the effect of therapy type (X) on symptom reduction (Y) differ by baseline severity (W)?</li>
+      </ul>
+      <div style="background:oklch(0.97 0.028 85);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.4 0.055 65)"><strong>Do NOT use moderation if:</strong> You have no theory-driven reason to expect the effect to vary — fishing for interactions inflates Type I error | Your sample is small (aim for N ≥ 200) | You want to know why the effect occurs, not when → use mediation instead | You have more than one DV → use MANOVA or SEM</div>
+      <h2>Assumptions:</h2>
+      <p>Moderation is tested through regression, so the same regression assumptions apply:</p>
+      <ul>
+        <li><strong>Linearity</strong></li>
+        <li><strong>Independence of residuals</strong></li>
+        <li><strong>Homoscedasticity</strong></li>
+        <li><strong>No excessive multicollinearity:</strong> Some correlation between X and the interaction term (X × W) is expected — this is why mean-centering continuous variables before computing the interaction is recommended.</li>
+      </ul>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Requires the <strong>medmod</strong> module. Install via Modules → jamovi library → search "medmod."</div>
+          <h3 style="margin-top:0">Mean-Centering (recommended before running):</h3>
+          <ol>
+            <li>Click "Data" → "Compute"</li>
+            <li>Create: X_c = X − MEAN(X)</li>
+            <li>Repeat for the moderator: W_c = W − MEAN(W)</li>
+          </ol>
+          <h3>Running the Moderation:</h3>
+          <ol>
+            <li>Click "medmod" → "Moderation"</li>
+            <li>Move the DV into the "Dependent Variable" box</li>
+            <li>Move the IV (X_c) into the "Predictor" box</li>
+            <li>Move the moderator (W_c) into the "Moderator" box</li>
+            <li>Under "Estimates," check "Labels," "Test statistics," and "Confidence interval"</li>
+            <li>Under "Simple Slopes," check "Simple slopes plot"</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button class="copy-btn" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">library(interactions)
+
+df$X_c &lt;- scale(df$X, center = TRUE, scale = FALSE)
+df$W_c &lt;- scale(df$W, center = TRUE, scale = FALSE)
+df$XW  &lt;- df$X_c * df$W_c
+
+mod_model &lt;- lm(Y ~ X_c + W_c + XW, data = df)
+mcSummary(mod_model)
+
+sim_slopes(mod_model, pred = X_c, modx = W_c, jnplot = FALSE)</code></pre>
+        </div>
+      </div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>Interaction term (X × W):</strong></p>
+      <ul>
+        <li>If <em>p</em> &lt; .05 → moderation is significant; the effect of X on Y depends on W.</li>
+        <li>If <em>p</em> &gt; .05 → moderation is not significant; the relationship does not significantly change across levels of W.</li>
+      </ul>
+      <p><strong>Simple slopes:</strong> When the interaction is significant, interpret the effect of X on Y at three levels of W: low (−1 SD), mean, and high (+1 SD). A crossover interaction — where the slope reverses direction across levels of W — is the strongest form of moderation.</p>
+      <p><strong>Simple slopes plot:</strong> The most intuitive way to report moderation. Shows the regression line of X on Y separately for low, mean, and high W. Non-parallel lines indicate an interaction. Always include this plot when reporting moderation results.</p>
+      <p><strong>β and R²:</strong> Interpreted the same as in standard regression.</p>
+      <h2>APA Format:</h2>
+      <p>Appropriate data visualization: Simple slopes plot. See <a href="https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-figures" target="_blank">APA sample figures</a>.</p>
+      <p>Sample write-up:</p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button class="copy-btn" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A moderated regression analysis examined whether [W] moderated the relationship between [X] and [Y]. After mean-centering, the interaction term ([X] × [W]) was entered alongside the main effects. The overall model was significant, <em>F</em>(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> &lt; .05, <em>R</em>² = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>. The interaction term was significant, <em>b</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>t</em>(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, 95% CI [<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>]. Simple slopes analysis revealed that the effect of [X] on [Y] was significant at low [W] (<em>b</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) but not at high [W] (<em>b</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>).</div></div>
+      <p>Note: Report b (unstandardized), t, df, p, and 95% CI for the interaction term. Report simple slopes at all three levels of W.</p>
+    </div>
+
+   <footer class="site-footer">
+     <p style="margin:0">Copyright &copy; 2025 Natalie Byrd</p>
+     <p style="margin:6px 0 0">Proper credit to this website is required if used as a course resource. Please include the following citation in your course syllabus:</p>
+     <p style="margin:4px 0 0">Byrd, N. S. (2024). <em>PsycStats ToolKit.</em> <a href="https://nsbyrd.github.io/PsycStatsToolKit/" target="_blank">https://nsbyrd.github.io/PsycStatsToolKit/</a></p>
+   </footer>
+   </div>
+  </main>
+</div>
+<script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Structural Equation Modeling (SEM) · PsycStats ToolKit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <a class="logo-link" href="index.html">
+      <div class="logo-title">PsycStats ToolKit</div>
+      <div class="logo-subtitle">PSYCHOLOGY STATISTICS HELP | JAMOVI AND R</div>
+    </a>
+    <nav class="sidebar-nav">
+      <a class="nav-item" href="descriptives.html"><span class="nav-num">01</span><span>Descriptive Statistics</span></a>
+      <a class="nav-item" href="ttest.html"><span class="nav-num">02</span><span>T-Tests</span></a>
+      <a class="nav-item" href="anova.html"><span class="nav-num">03</span><span>ANOVA</span></a>
+      <a class="nav-item" href="correlation.html"><span class="nav-num">04</span><span>Correlation</span></a>
+      <a class="nav-item" href="regression.html"><span class="nav-num">05</span><span>Regression</span></a>
+      <a class="nav-item" href="mediation.html"><span class="nav-num">06</span><span>Mediation</span></a>
+      <a class="nav-item" href="moderation.html"><span class="nav-num">07</span><span>Moderation</span></a>
+      <a class="nav-item" href="chisquare.html"><span class="nav-num">08</span><span>Chi-Square</span></a>
+      <a class="nav-item active" href="sem.html"><span class="nav-num">09</span><span>Structural Equation Modeling (SEM)</span></a>
+    </nav>
+    <div class="last-update">Last update: 9/05/2026</div>
+  </aside>
+
+  <main class="content">
+   <div class="content-inner">
+
+<div>
+      <h1>Structural Equation Modeling (SEM)</h1>
+      <h2>Purpose:</h2>
+      <p>SEM simultaneously estimates relationships among multiple variables, including latent variables — constructs measured indirectly through observed indicators such as survey items. It combines factor analysis and path analysis in a single model.</p>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">SEM is <strong>confirmatory</strong>, not exploratory. Your model should be grounded in an established theoretical framework before running the analysis.</div>
+      <h2>Context Used:</h2>
+      <ul>
+        <li>You have multiple observed variables (e.g., survey items) measuring one or more latent constructs.</li>
+        <li>You want to test a theoretically derived structural model with directional paths.</li>
+        <li>You have a large enough sample (generally N ≥ 200).</li>
+      </ul>
+      <h2>Assumptions:</h2>
+      <ul>
+        <li><strong>Large sample size:</strong> At least 10 observations per estimated parameter; N ≥ 200 recommended for stable estimates.</li>
+        <li><strong>Multivariate normality:</strong> Observed variables should be approximately normally distributed. Severe non-normality inflates χ² fit statistics.</li>
+        <li><strong>Theory-driven model:</strong> Testing multiple models until one fits ("model fishing") inflates Type I error. Specify your model before looking at the data.</li>
+        <li><strong>Sufficient indicators:</strong> Each latent variable should have at least 3 observed indicators for the model to be identified.</li>
+      </ul>
+      <div style="background:oklch(0.97 0.028 85);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.4 0.055 65)"><strong>Do NOT use SEM if:</strong> Your sample is small (N &lt; 200) | You are exploring without a prior theoretical model → use EFA or regression first | All variables are directly observed with no latent constructs → use path analysis or multiple regression | You have not yet worked through regression and factor analysis</div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Requires the <strong>semlj</strong> module. Install via Modules → jamovi library → search "semlj."</div>
+          <ol>
+            <li>Click "SEM" → "semlj"</li>
+            <li>Specify your measurement model in the syntax editor using lavaan syntax: <code>latent =~ item1 + item2 + item3</code></li>
+            <li>Specify structural paths: <code>Y ~ X</code></li>
+            <li>Under "Fit Indices," check CFI, TLI, RMSEA, and SRMR</li>
+            <li>Under "Parameters," check "Estimates" and "Standard errors"</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button class="copy-btn" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">sem_model &lt;- '
+  LatentX =~ x1 + x2 + x3
+  LatentM =~ m1 + m2 + m3
+  LatentY =~ y1 + y2 + y3
+
+  LatentM ~ a * LatentX
+  LatentY ~ b * LatentM + c * LatentX
+
+  indirect := a * b
+  total    := c + (a * b)
+'
+
+sem_fit &lt;- sem(sem_model, data = df, missing = "fiml", estimator = "ML")
+summary(sem_fit, fit.measures = TRUE, standardized = TRUE, rsquare = TRUE)</code></pre>
+        </div>
+      </div>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">For full latent variable models, the syntax editor within semlj is required. A tutorial video is strongly recommended for first-time users.</div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>Chi-Square (χ²):</strong> Unlike other tests, in SEM a <strong>non-significant</strong> χ² (<em>p</em> &gt; .05) indicates good model fit — the model-implied covariances do not significantly differ from the observed covariances. However, χ² is highly sensitive to sample size: with N &gt; 300, even minor misspecification will produce a significant χ². Always report χ² alongside other fit indices.</p>
+      <p><strong>CFI (Comparative Fit Index):</strong></p>
+      <ul>
+        <li>CFI &gt; .95 = good fit</li>
+        <li>CFI .90 – .95 = acceptable fit</li>
+        <li>CFI &lt; .90 = poor fit</li>
+      </ul>
+      <p><strong>TLI (Tucker-Lewis Index):</strong></p>
+      <ul>
+        <li>TLI &gt; .95 = good fit</li>
+        <li>TLI .90 – .95 = acceptable fit</li>
+        <li>TLI &lt; .90 = poor fit</li>
+      </ul>
+      <p><strong>RMSEA (Root Mean Square Error of Approximation):</strong></p>
+      <ul>
+        <li>RMSEA &lt; .05 = good fit</li>
+        <li>RMSEA .05 – .08 = acceptable fit</li>
+        <li>RMSEA &gt; .10 = poor fit</li>
+      </ul>
+      <p>Also report the 90% CI around RMSEA. A narrower CI reflects more precise estimates.</p>
+      <p><strong>AIC (Akaike Information Criterion):</strong> Used to compare competing models. A lower AIC indicates better fit. Only meaningful in comparison — not in isolation.</p>
+      <p><strong>Path coefficients:</strong> Interpreted similarly to β in regression. Each represents the unique directional relationship between two variables in the model, controlling for all others.</p>
+      <h2>APA Format:</h2>
+      <p>Sample write-up:</p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button class="copy-btn" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A structural equation model tested whether [X] predicted [Y] through [latent construct]. The model demonstrated acceptable fit: χ²(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, CFI = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, TLI = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, RMSEA = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, 90% CI [<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>]. The standardized path from [X] to [Y] was significant (β = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>), indicating that [conclusion].</div></div>
+      <p>Note: Always report χ², df, p, CFI, TLI, RMSEA (with 90% CI), and standardized path coefficients. Include a path diagram as a figure.</p>
+    </div>
+
+   <footer class="site-footer">
+     <p style="margin:0">Copyright &copy; 2025 Natalie Byrd</p>
+     <p style="margin:6px 0 0">Proper credit to this website is required if used as a course resource. Please include the following citation in your course syllabus:</p>
+     <p style="margin:4px 0 0">Byrd, N. S. (2024). <em>PsycStats ToolKit.</em> <a href="https://nsbyrd.github.io/PsycStatsToolKit/" target="_blank">https://nsbyrd.github.io/PsycStatsToolKit/</a></p>
+   </footer>
+   </div>
+  </main>
+</div>
+<script src="script.js" defer></script>
+</body>
+</html>

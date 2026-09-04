@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Correlation · PsycStats ToolKit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <a class="logo-link" href="index.html">
+      <div class="logo-title">PsycStats ToolKit</div>
+      <div class="logo-subtitle">PSYCHOLOGY STATISTICS HELP | JAMOVI AND R</div>
+    </a>
+    <nav class="sidebar-nav">
+      <a class="nav-item" href="descriptives.html"><span class="nav-num">01</span><span>Descriptive Statistics</span></a>
+      <a class="nav-item" href="ttest.html"><span class="nav-num">02</span><span>T-Tests</span></a>
+      <a class="nav-item" href="anova.html"><span class="nav-num">03</span><span>ANOVA</span></a>
+      <a class="nav-item active" href="correlation.html"><span class="nav-num">04</span><span>Correlation</span></a>
+      <a class="nav-item" href="regression.html"><span class="nav-num">05</span><span>Regression</span></a>
+      <a class="nav-item" href="mediation.html"><span class="nav-num">06</span><span>Mediation</span></a>
+      <a class="nav-item" href="moderation.html"><span class="nav-num">07</span><span>Moderation</span></a>
+      <a class="nav-item" href="chisquare.html"><span class="nav-num">08</span><span>Chi-Square</span></a>
+      <a class="nav-item" href="sem.html"><span class="nav-num">09</span><span>Structural Equation Modeling (SEM)</span></a>
+    </nav>
+    <div class="last-update">Last update: 9/05/2026</div>
+  </aside>
+
+  <main class="content">
+   <div class="content-inner">
+
+<div>
+      <h1>Correlation</h1>
+      <h2>Purpose:</h2>
+      <p>A correlation measures the strength and direction of the linear relationship between two continuous variables. It does not imply that one variable causes the other.</p>
+      <h2>Context Used:</h2>
+      <ul>
+        <li>There must be TWO CONTINUOUS variables.</li>
+        <li>There is no distinction between IV and DV — correlation is symmetric.</li>
+      </ul>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">If variables are ordinal or the relationship is non-linear, use Spearman's rho instead of Pearson's r.</div>
+      <div style="background:oklch(0.97 0.028 85);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.4 0.055 65)"><strong>Do NOT use correlation if:</strong> You want to predict one variable from another → use regression | Your variables are categorical → use chi-square | You have more than two variables to examine → consider multiple regression or factor analysis</div>
+      <h2>Assumptions:</h2>
+      <ul>
+        <li><strong>Continuous variables:</strong> Both variables must be measured on a continuous scale.</li>
+        <li><strong>Linearity:</strong> The relationship between the two variables should follow a straight-line pattern. Check with a scatterplot.</li>
+        <li><strong>No extreme outliers:</strong> Outliers can heavily distort Pearson's r.</li>
+        <li><strong>Normality:</strong> Both variables should be approximately normally distributed for significance testing to be accurate.</li>
+      </ul>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <ol>
+            <li>Click "Regression"</li>
+            <li>Click "Correlation Matrix"</li>
+            <li>Move both variables into the box on the right</li>
+            <li>Check "Pearson" under "Correlation Coefficients"</li>
+            <li>Check "Report significance" and "Confidence intervals"</li>
+            <li>Check "Correlation matrix plot" under "Plot" for a visual</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button class="copy-btn" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">cor.test(df$variable1, df$variable2)
+
+corr.test(df[, c("var1", "var2", "var3")])   # psych package: gives r, p, n</code></pre>
+        </div>
+      </div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>Pearson's r:</strong> Ranges from −1.00 to +1.00. The sign indicates direction; the absolute value indicates strength.</p>
+      <table>
+        <tr><th>|r|</th><th>Strength</th></tr>
+        <tr><td>.00 – .09</td><td>Negligible</td></tr>
+        <tr><td>.10 – .29</td><td>Small</td></tr>
+        <tr><td>.30 – .49</td><td>Medium</td></tr>
+        <tr><td>≥ .50</td><td>Large</td></tr>
+      </table>
+      <ul style="margin-top:8px">
+        <li>Positive r: as one variable increases, the other increases.</li>
+        <li>Negative r: as one variable increases, the other decreases.</li>
+      </ul>
+      <p><strong>p-value:</strong></p>
+      <ul>
+        <li>If <em>p</em> &lt; .05 → there IS a significant association between the two variables.</li>
+        <li>If <em>p</em> &gt; .05 → there is NO significant association.</li>
+      </ul>
+      <p><strong>df:</strong> For correlation, df = <em>N</em> − 2. Report in parentheses after r: e.g., <em>r</em>(38) = .34 means N = 40.</p>
+      <h2>APA Format:</h2>
+      <p>Appropriate data visualization: Scatterplot with line of best fit.</p>
+      <p>Sample write-up:</p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button class="copy-btn" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A Pearson correlation examined the relationship between [Variable 1] and [Variable 2]. There was a statistically significant [positive/negative] association, <em>r</em>(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, 95% CI [<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>]. These results suggest that as [Variable 1] increases, [Variable 2] [increases/decreases].</div></div>
+      <p>Note: Report r, df in parentheses, p-value, and 95% CI.</p>
+    </div>
+
+   <footer class="site-footer">
+     <p style="margin:0">Copyright &copy; 2025 Natalie Byrd</p>
+     <p style="margin:6px 0 0">Proper credit to this website is required if used as a course resource. Please include the following citation in your course syllabus:</p>
+     <p style="margin:4px 0 0">Byrd, N. S. (2024). <em>PsycStats ToolKit.</em> <a href="https://nsbyrd.github.io/PsycStatsToolKit/" target="_blank">https://nsbyrd.github.io/PsycStatsToolKit/</a></p>
+   </footer>
+   </div>
+  </main>
+</div>
+<script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T-Tests · PsycStats ToolKit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <a class="logo-link" href="index.html">
+      <div class="logo-title">PsycStats ToolKit</div>
+      <div class="logo-subtitle">PSYCHOLOGY STATISTICS HELP | JAMOVI AND R</div>
+    </a>
+    <nav class="sidebar-nav">
+      <a class="nav-item" href="descriptives.html"><span class="nav-num">01</span><span>Descriptive Statistics</span></a>
+      <a class="nav-item active" href="ttest.html"><span class="nav-num">02</span><span>T-Tests</span></a>
+      <a class="nav-item" href="anova.html"><span class="nav-num">03</span><span>ANOVA</span></a>
+      <a class="nav-item" href="correlation.html"><span class="nav-num">04</span><span>Correlation</span></a>
+      <a class="nav-item" href="regression.html"><span class="nav-num">05</span><span>Regression</span></a>
+      <a class="nav-item" href="mediation.html"><span class="nav-num">06</span><span>Mediation</span></a>
+      <a class="nav-item" href="moderation.html"><span class="nav-num">07</span><span>Moderation</span></a>
+      <a class="nav-item" href="chisquare.html"><span class="nav-num">08</span><span>Chi-Square</span></a>
+      <a class="nav-item" href="sem.html"><span class="nav-num">09</span><span>Structural Equation Modeling (SEM)</span></a>
+    </nav>
+    <div class="last-update">Last update: 9/05/2026</div>
+  </aside>
+
+  <main class="content">
+   <div class="content-inner">
+
+<div>
+      <h1>T-Tests</h1>
+      <h2>Purpose:</h2>
+      <p>Compare the means between two groups. There are three kinds of t-tests: an independent samples t-test (for between-group manipulation), a paired samples t-test (for within-group manipulation), and one-sample t-tests (for one sample being compared to the population).</p>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Note: Between-group manipulation (between-subjects study design) means that each group received a different IV treatment condition (level). Within-group manipulation (within-subjects study design) means that every participant experiences every IV treatment condition (level).</div>
+      <h2>Context Used:</h2>
+      <ul>
+        <li>There must be only ONE CATEGORICAL IV, with only TWO LEVELS.</li>
+        <li>Additionally, there must be only ONE QUANTITATIVE DV.</li>
+      </ul>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)">Note: Categorical variables are variables where the data represents groups with no real numerical value (e.g., gender, car brand, hair color, education level). Quantitative variables are variables where the data represents amounts with a real numerical value (e.g., height, weight, age, time, speed, distance).</div>
+      <div style="background:oklch(0.97 0.028 85);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.4 0.055 65)"><strong>Do NOT use a t-test if:</strong> Your IV has more than two levels → use ANOVA | Your DV is categorical → use chi-square | You have multiple DVs → use MANOVA | You have covariates you need to control for → use ANCOVA or regression</div>
+      <h2>Assumptions:</h2>
+      <p>Before running a t-test, three assumptions should be met:</p>
+      <ul>
+        <li><strong>Normality:</strong> The DV should be approximately normally distributed within each group. In Jamovi, check this under "Assumption Checks" → "Normality test (Shapiro-Wilk)." If <em>p</em> &lt; .05, normality is violated — use a non-parametric test instead.</li>
+        <li><strong>Independence:</strong> Observations must be independent of one another (each participant contributes one score).</li>
+        <li><strong>Homogeneity of variances (independent samples only):</strong> The two groups should have similar variances. Jamovi tests this with Levene's test. If <em>p</em> &lt; .05, select "Welch's" correction under "Variances."</li>
+      </ul>
+      <div style="background:oklch(0.965 0.014 250);padding:14px 17px;margin:0 0 16px;font-size:15.5px;line-height:1.65;color:oklch(0.36 0.025 260)"><strong>When to use a non-parametric alternative:</strong> If the normality assumption is violated, use: Independent samples → Mann-Whitney U | Paired samples → Wilcoxon Signed-Rank Test. Both are available in Jamovi under the T-Tests menu.</div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:42px">
+        <div>
+          <h2 style="margin:0 0 12px">Jamovi Walkthrough:</h2>
+          <h3 style="margin-top:0">Independent Samples T-Test:</h3>
+          <ol>
+            <li>Click "T-Tests"</li>
+            <li>Click "Independent Samples T-Test"</li>
+            <li>Enter the quantitative dependent variable into the "Dependent Variables" box</li>
+            <li>Enter the categorical independent variable in the "Grouping Variable" box</li>
+            <li>Check "Effect size" and "Confidence interval" under "Additional Statistics"</li>
+          </ol>
+          <h3>Paired Samples T-Test:</h3>
+          <ol>
+            <li>Click "T-Tests"</li>
+            <li>Click "Paired Samples T-Test"</li>
+            <li>Enter the two IV level score columns into the "Paired Variables" box</li>
+            <li>Check "Effect size" and "Confidence interval" under "Additional Statistics"</li>
+          </ol>
+          <h3>One-Sample T-Test:</h3>
+          <ol>
+            <li>Click "T-Tests"</li>
+            <li>Click "One Sample T-Test"</li>
+            <li>Enter the sample's DV scores into the "Dependent Variables" box</li>
+            <li>Enter the known population mean into the "Test value" field</li>
+            <li>Check "Effect size" and "Confidence interval" under "Additional Statistics"</li>
+          </ol>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px">R Walkthrough:</h2>
+          <h3 style="margin-top:0">Independent Samples T-Test:</h3>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0 0 14px" data-copy=""><button class="copy-btn" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">t.test(DV ~ grouping_variable, data = df,
+       paired = FALSE, var.equal = TRUE, conf.level = .95)
+
+effsize::cohen.d(DV ~ grouping_variable, data = df,
+                 pooled = TRUE, hedges.correction = FALSE)</code></pre>
+          <h3>Paired Samples T-Test:</h3>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0 0 14px" data-copy=""><button class="copy-btn" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">t.test(df$before, df$after,
+       paired = TRUE, alternative = "two.sided", conf.level = .95)
+
+effsize::cohen.d(df$before, df$after, paired = TRUE, hedges.correction = FALSE)</code></pre>
+          <h3>One-Sample T-Test:</h3>
+          <pre style="position:relative;background:#232220;color:#e8e6df;border-radius:6px;padding:16px 44px 16px 18px;white-space:pre-wrap;word-break:break-word;font:13px/1.6 ui-monospace,Menlo,monospace;margin:0" data-copy=""><button class="copy-btn" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#cfcdc5;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><code data-copy-text="">t.test(df$variable, mu = 100, conf.level = .95)
+
+effsize::cohen.d(df$variable ~ 1, mu = 100, conf.level = .95)</code></pre>
+        </div>
+      </div>
+      <h2>Output Interpretation:</h2>
+      <p><strong>p-value:</strong> The probability of detecting a meaningful relationship/difference when there is none. We are typically looking for a small value (<em>p</em> &lt; .05).</p>
+      <ul>
+        <li>If <em>p</em> &lt; .05, reject the null hypothesis. There IS a significant difference.</li>
+        <li>If <em>p</em> &gt; .05, retain the null hypothesis. There is NO significant difference.</li>
+      </ul>
+      <p><strong>t-value:</strong> The number of estimated standard error of the mean (SEM) units the sample is from the population.</p>
+      <ul>
+        <li>If t-value is small, there is more similarity between the two sample sets.</li>
+        <li>If t-value is large, a large difference exists between the two sample sets.</li>
+        <li>If t-value is negative, it has no bearing on the significance of the difference. It only indicates a reversed directionality of the effect.</li>
+      </ul>
+      <p><strong>SEM:</strong> Average deviation of sample means from the population mean. A measure of sampling error.</p>
+      <ul>
+        <li>If SEM is small, sample means are similar to the population mean, with little sampling error (this is what we want).</li>
+        <li>If SEM is large, sample means are more variable.</li>
+      </ul>
+      <p><strong>df:</strong> Values in a study that have the freedom to vary. Essential for assessing the importance and validity of the null hypothesis.</p>
+      <p><strong>Effect size - Cohen's <em>d</em>:</strong> A measure of the magnitude of the mean difference. Bigger numbers mean a bigger difference between groups in terms of standard deviation.</p>
+      <table>
+        <tr><th>Cohen's d</th><th>Interpretation</th></tr>
+        <tr><td>&lt; .20</td><td>Very small effect size</td></tr>
+        <tr><td>.20 – .49</td><td>Small effect size</td></tr>
+        <tr><td>.50 – .79</td><td>Medium effect size</td></tr>
+        <tr><td>≥ .80</td><td>Large effect size</td></tr>
+      </table>
+      <p><strong>Confidence Interval (CI):</strong> The 95% CI refers to the interval around the mean difference. If the CI does not include zero, the difference is statistically significant at <em>p</em> &lt; .05. If it includes zero, the difference is not significant. In Jamovi, check "Confidence interval" under "Additional Statistics" to get these values. Report the lower and upper bounds in brackets.</p>
+      <h2>APA Format:</h2>
+      <p>Appropriate data visualization: <a href="https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-figures#bar" target="_blank">Bar graphs</a> (with error bars).</p>
+      <p>Sample table: <a href="https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables#tests" target="_blank">https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables#tests</a></p>
+      <p>Sample write-up:</p>
+      <div style="position:relative;background:#fffefb;border:1px solid rgba(30,29,26,.15);padding:17px 60px 17px 19px;margin:8px 0 14px;font-size:15.5px;line-height:1.75" data-copy=""><button class="copy-btn" style="position:absolute;top:10px;right:10px;font:600 10.5px &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:oklch(0.45 0.07 250);background:rgba(30,29,26,.05);border:1px solid rgba(30,29,26,.15);border-radius:4px;padding:4px 8px;cursor:pointer">Copy</button><div data-copy-text="">A paired-samples t-test compared the average [DV] during [Condition 1] (<em>M</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>SD</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) and [Condition 2] (<em>M</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>SD</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>). There was a significant difference in [DV], <em>t</em>(<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>) = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <em>p</em> &lt; .05, <em>d</em> = <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, 95% CI [<span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>, <span style="display:inline-block;min-width:38px;border-bottom:1px solid rgba(30,29,26,.45);margin:0 2px"></span>]. These results suggest that [DV] increases/decreases from [Condition 1] to [Condition 2].</div></div>
+      <p>Note: Plug in the appropriate test used, means, standard deviations, whether the test was significant, t-value, df, p-level, the strength of the relationship (d), confidence interval, and a conclusion.</p>
+    </div>
+
+   <footer class="site-footer">
+     <p style="margin:0">Copyright &copy; 2025 Natalie Byrd</p>
+     <p style="margin:6px 0 0">Proper credit to this website is required if used as a course resource. Please include the following citation in your course syllabus:</p>
+     <p style="margin:4px 0 0">Byrd, N. S. (2024). <em>PsycStats ToolKit.</em> <a href="https://nsbyrd.github.io/PsycStatsToolKit/" target="_blank">https://nsbyrd.github.io/PsycStatsToolKit/</a></p>
+   </footer>
+   </div>
+  </main>
+</div>
+<script src="script.js" defer></script>
+</body>
+</html>
