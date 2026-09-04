@@ -54,3 +54,24 @@ main a:hover{color:oklch(0.34 0.08 250);border-bottom-color:currentColor}
 .home-item:hover{background:rgba(30,29,26,.035)}
 .home-item-dot{font:500 11px ui-monospace,Menlo,monospace;color:#a8a49b}
 .home-item-label{font:400 16px/1.3 "Helvetica Neue",Helvetica,Arial,sans-serif;color:oklch(0.45 0.07 250)}
+
+/* Mobile nav collapse: hidden checkbox + label, pure CSS sibling selectors, no JS.
+   Desktop (default): label stays hidden, nav is always shown (base .sidebar-nav rule).
+   Mobile (<=720px): nav starts collapsed; tapping the label toggles it via :checked. */
+.nav-toggle-label{display:none;cursor:pointer;font:600 12.5px "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#4a4741;padding:8px 10px;margin-left:-10px;border-radius:4px}
+.nav-toggle-label::after{content:"+";float:right;color:#a8a49b;font-size:15px;font-weight:400}
+.nav-toggle-input:checked ~ .nav-toggle-label::after{content:"\2212"}
+.nav-toggle-label:hover{background:rgba(30,29,26,.05)}
+
+@media (max-width:720px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:static;min-height:0;border-right:none;border-bottom:1px solid rgba(30,29,26,.12);padding:20px 24px;gap:14px}
+  .content{padding:32px 24px 0}
+  .last-update{display:none}
+  .home-list{grid-template-columns:1fr}
+  .back-to-top{width:38px;height:38px;bottom:18px;right:18px}
+
+  .nav-toggle-label{display:block}
+  .sidebar-nav{display:none}
+  .nav-toggle-input:checked ~ .sidebar-nav{display:flex}
+}
